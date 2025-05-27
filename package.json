@@ -1,6 +1,6 @@
 {
-  "name": "the-coding-journey",
-  "private": true,
+  "name": "Rentalcar",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
