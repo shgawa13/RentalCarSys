@@ -6,7 +6,7 @@ const SheardLayout = () => {
     <div className="relative flex w-[100vw] h-[100vh]">
       <Sidebar />
       {/* here is the body */}
-      <div className="flex-1 flex flex-col bg-[#f8f9fa] border-r-slate-50	">
+      <div className="flex-1 flex flex-col bg-[#F7F9FB] border-r-slate-50	">
         <div className="px-2 h-[calc(100vh - 60px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-40">
             {" "}

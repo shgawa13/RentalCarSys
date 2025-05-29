@@ -1,5 +1,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import MAvatar from "../../assets/Male_avatar.jpg";
+import FeAvatar from "../../assets/Female_avatar.jpg";
 import {
   Card,
   CardHeader,
@@ -32,11 +34,19 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+const TABLE_HEAD = [
+  "CustomerID",
+  "FullName",
+  "DateOfBirth",
+  "Gender",
+  "PhoneNumber",
+  "DriverLicenseNumber",
+  "",
+];
 
 const TABLE_ROWS = [
   {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+    img: `${MAvatar}`,
     name: "John Michael",
     email: "john@creative-tim.com",
     job: "Manager",
@@ -89,7 +99,7 @@ const Customers = () => {
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Members list
+              Cutomers list
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
               See information about all members
@@ -100,7 +110,7 @@ const Customers = () => {
               view all
             </Button>
             <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add customer
             </Button>
           </div>
         </div>
