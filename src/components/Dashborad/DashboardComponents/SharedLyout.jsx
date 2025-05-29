@@ -1,7 +1,23 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+const SheardLayout = () => {
+  return (
+    <div className="relative flex w-[100vw] h-[100vh]">
+      <Sidebar />
+      {/* here is the body */}
+      <div className="flex-1 flex flex-col bg-[#181818e8] border-r-slate-50	">
+        <div className="px-2 h-[calc(100vh - 60px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
+          <div className="flex-1 h-fit pb-40">
+            {" "}
+            <Outlet />
+          </div>
 
-const SharedLyout = () => {
-  return <div>SharedLyout</div>;
+          <div className="xl:sticky relative top-0 h-fit"></div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default SharedLyout;
+export default SheardLayout;

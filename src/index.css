@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,38 +12,37 @@
   box-sizing: border-box;
 }
 
-.body-login{
-   font-family: "Poppins", sans-serif;
+.body-login {
+  font-family: "Poppins", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; 
+  min-height: 100vh;
   width: 205.6vh;
   background: linear-gradient(rgba(0, 0, 0, 0.276), rgba(0, 0, 0, 0.249)),
     url(assets/website/images-2021-09-02T024211.464.webp);
   background-size: cover;
   background-position: center;
 }
-.formLogin{
+.formLogin {
   padding: 40px;
   position: relative;
 
-left: 490px;
-background: #72737b;
-width: 450px;
-height: 450px;
-border-radius: 20px;
+  left: 490px;
+  background: #72737b;
+  width: 450px;
+  height: 450px;
+  border-radius: 20px;
 }
-.formRegister{
+.formRegister {
   padding: 40px;
   position: relative;
 
-left: 530px;
-background: #72737b;
-width: 450px;
-height: 490px;
-border-radius: 20px;
-
+  left: 530px;
+  background: #72737b;
+  width: 450px;
+  height: 490px;
+  border-radius: 20px;
 }
 .header nav {
   display: flex;
@@ -79,25 +79,19 @@ html {
   width: 150px;
 }
 
-
 .btn-sh {
   width: 130px;
-
 }
-.btn-c{
+.btn-c {
   width: 160px;
   position: relative;
   justify-content: center;
   left: 45%;
-  top:20px
+  top: 20px;
 }
-
-
-
 
 /* style chatBot */
 /* Importin google foont -inter */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:wght@400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -106,15 +100,14 @@ html {
   font-family: "inter", sans-serif;
 }
 
-.body-chat{
+.body-chat {
   width: 100%;
   display: flex;
   min-height: 100vh;
-  
+
   align-items: center;
   justify-content: center;
   background: linear-gradient(#ffffff, #b8add68f);
-
 }
 
 .chatbot-popup {
@@ -266,13 +259,12 @@ html {
 .chat-form .message-input:valid ~ button {
   display: block;
 }
-.ReturnToHomeChat{
+.ReturnToHomeChat {
   width: 50px;
   height: 30px;
   position: absolute;
-    bottom: 480px;
-    right:  60px;
-
+  bottom: 480px;
+  right: 60px;
 }
 @media (max-width: 520px) {
   /* #chatbot-toggler{
@@ -301,8 +293,7 @@ html {
 
 .booking__form {
   width: 120%;
-  position: relative
-  ;
+  position: relative;
   right: 180px;
 }
 .btn-carD {
@@ -311,18 +302,18 @@ html {
   left: 40px;
 }
 
-.btn-exit{
+.btn-exit {
   position: relative;
   left: 1140px;
   top: 20px;
   font-size: 25px;
 }
-.btn-exit-ItemCars{
+.btn-exit-ItemCars {
   position: relative;
   left: 1265px;
   bottom: 30px;
   font-size: 25px;
 }
-.A-carList{
+.A-carList {
   color: red;
 }

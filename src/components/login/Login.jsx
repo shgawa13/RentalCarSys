@@ -6,7 +6,7 @@
 // const Login = () => {
 //   return (
 //     <div className={`body-login wrapper`}>
-      
+
 //       <div className="form-box login">
 //         <form action="" className="formLogin">
 //           <Link to={"/"}>
@@ -44,14 +44,7 @@
 
 // export default Login;
 
-
-
-
-
-
-
-
-import {  useState } from "react";
+import { useState } from "react";
 import "./LoginRegistter.css";
 import { FaUser, FaLock, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -64,13 +57,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://YOUR_SERVER_DOMAIN/backend/login.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "http://YOUR_SERVER_DOMAIN/backend/login.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
@@ -128,6 +124,7 @@ const Login = () => {
               Do not have an account? <Link to={"/register"}>Register</Link>
             </p>
           </div>
+          <Link to={"/Dashboard"}> Dash</Link>
         </form>
       </div>
     </div>

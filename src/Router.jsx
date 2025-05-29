@@ -8,6 +8,21 @@ import ChatBotPage from "./components/ChatBot/ChatBotPage";
 import ChatPage from "./components/ChatBot/ChatPage";
 import CarDetails from "./components/ListsCars/CarDetails";
 import APITest from "./components/Tester/APITest";
+import MainDashboard from "./components/Dashborad/Pages/MainDashboard";
+import CustomersList from "./components/Dashborad/Pages/Customers/CustomersList";
+import AddNewCustomer from "./components/Dashborad/Pages/Customers/AddNewCustomer";
+import CustomerDetail from "./components/Dashborad/Pages/Customers/CustomerDetail";
+import UpdateCustomer from "./components/Dashborad/Pages/Customers/UpdateCustomer";
+import VehicleDetail from "./components/Dashborad/Pages/Vehicles/VehicleDetail";
+import VehicleList from "./components/Dashborad/Pages/Vehicles/VehicleList";
+import AddNewVehicle from "./components/Dashborad/Pages/Vehicles/AddNewVehicle";
+import UpdateVehicle from "./components/Dashborad/Pages/Vehicles/UpdateVehicle";
+import BookingCarList from "./components/Dashborad/Pages/Booking/BookingCarList";
+import AddNewBooking from "./components/Dashborad/Pages/Booking/AddNewBooking";
+import UpdateBooking from "./components/Dashborad/Pages/Booking/UpdateBooking";
+import TransactionList from "./components/Dashborad/Pages/RentalTransaction/TransactionList";
+import Payment from "./components/Dashborad/Pages/RentalTransaction/Payment";
+
 const Router = () => {
   return (
     <Bro>
@@ -20,6 +35,46 @@ const Router = () => {
         <Route path="/chatbot" element={<ChatBotPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/APITest" element={<APITest />} />
+        <Route path="/Dashboard" element={<MainDashboard />}>
+          {/* Customers Routs */}
+          <Route path="/Dashboard/Customers" element={<CustomersList />} />
+          <Route
+            path="/Dashboard/Customers/AddNew"
+            element={<AddNewCustomer />}
+          />
+          <Route
+            path="/Dashboard/Customers/Detail"
+            element={<CustomerDetail />}
+          />
+          <Route
+            path="/Dashboard/Customers/Update"
+            element={<UpdateCustomer />}
+          />
+          {/* Vehicles Routs*/}
+          <Route path="/Dashboard/Vehicles" element={<VehicleList />} />
+          <Route
+            path="/Dashboard/Vehicles/addnew"
+            element={<AddNewVehicle />}
+          />
+          <Route
+            path="/Dashboard/vehicles/Detail"
+            element={<VehicleDetail />}
+          />
+          <Route
+            path="/Dashboard/vehicles/Update"
+            element={<UpdateVehicle />}
+          />
+          {/* Booking Car */}
+          <Route path="/Dashboard/Booking" element={<BookingCarList />} />
+          <Route path="/Dashboard/Booking/addnew" element={<AddNewBooking />} />
+          <Route
+            path="/Dashboard/Booking/Updatebooking"
+            element={<UpdateBooking />}
+          />
+          {/* Transactions */}
+          <Route path="/Dashboard/Transactions" element={<TransactionList />} />
+          <Route path="/Dashboard/Payment" element={<Payment />} />
+        </Route>
       </Routes>
     </Bro>
   );
