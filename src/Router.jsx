@@ -22,6 +22,9 @@ import AddNewBooking from "./components/Dashborad/Pages/Booking/AddNewBooking";
 import UpdateBooking from "./components/Dashborad/Pages/Booking/UpdateBooking";
 import TransactionList from "./components/Dashborad/Pages/RentalTransaction/TransactionList";
 import Payment from "./components/Dashborad/Pages/RentalTransaction/Payment";
+import Users from "./components/Dashborad/Pages/Users/UsersList";
+import AddnewUser from "./components/Dashborad/Pages/Users/AddNewUser";
+import UpdateUser from "./components/Dashborad/Pages/Users/UpdateUser";
 
 const Router = () => {
   return (
@@ -50,6 +53,7 @@ const Router = () => {
             path="/Dashboard/Customers/Update"
             element={<UpdateCustomer />}
           />
+
           {/* Vehicles Routs*/}
           <Route path="/Dashboard/Vehicles" element={<VehicleList />} />
           <Route
@@ -64,16 +68,20 @@ const Router = () => {
             path="/Dashboard/vehicles/Update"
             element={<UpdateVehicle />}
           />
+
           {/* Booking Car */}
           <Route path="/Dashboard/Booking" element={<BookingCarList />} />
           <Route path="/Dashboard/Booking/addnew" element={<AddNewBooking />} />
-          <Route
-            path="/Dashboard/Booking/Updatebooking"
-            element={<UpdateBooking />}
-          />
+          <Route path="/Dashboard/Booking/Update" element={<UpdateBooking />} />
+
           {/* Transactions */}
           <Route path="/Dashboard/Transactions" element={<TransactionList />} />
           <Route path="/Dashboard/Payment" element={<Payment />} />
+
+          {/* Users */}
+          <Route path="/Dashboard/Users" element={<Users />} />
+          <Route path="/Dashboard/Users/addnew" element={<AddnewUser />} />
+          <Route path="/Dashboard/Users/UpdateUser" element={<UpdateUser />} />
         </Route>
       </Routes>
     </Bro>
