@@ -2,6 +2,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import MAvatar from "../../assets/Male_avatar.jpg";
 import FeAvatar from "../../assets/Female_avatar.jpg";
+import { useData } from "../../DashboardComponents/DataContext";
+
 import {
   Card,
   CardHeader,
@@ -36,17 +38,17 @@ const TABS = [
 
 const TABLE_HEAD = [
   "CustomerID",
-  "FullName",
-  "DateOfBirth",
+  "Full Name",
+  "Date Of Birth",
   "Gender",
-  "PhoneNumber",
-  "DriverLicenseNumber",
+  "Phone Number",
+  "Driver LicenseNumber",
   "",
 ];
 
 const TABLE_ROWS = [
   {
-    img: `${MAvatar}`,
+    img: `${FeAvatar}`,
     name: "John Michael",
     email: "john@creative-tim.com",
     job: "Manager",
@@ -93,6 +95,8 @@ const TABLE_ROWS = [
 ];
 
 const Customers = () => {
+  const { customersData } = useData();
+  console.log(customersData);
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -153,84 +157,87 @@ const Customers = () => {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+            {customersData.map((row, index) => {
+              const isLast = index === TABLE_ROWS.length - 1;
+              const classes = isLast
+                ? "p-4"
+                : "p-4 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {email}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {org}
-                        </Typography>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+              const fullName = `${row.FirstName} ${row.SecondName} ${row.LastName}`;
+              const genderLabel = row.Gender ? "Female" : "Male";
+
+              return (
+                <tr key={row.CustomerID}>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {row.CustomerID}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {fullName}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {row.DateOfBirth}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal flex justify-start items-center"
+                    >
+                      <img
+                        src={row.Gender ? FeAvatar : MAvatar}
+                        alt={row.FirstName}
+                        size="sm"
+                        className="h-16"
+                      />
+                      {genderLabel}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {row.PhoneNumber}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {row.DriverLicenseNumber}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Tooltip content="Edit Customer">
+                      <IconButton variant="text">
+                        <PencilIcon className="h-4 w-4" />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </CardBody>
