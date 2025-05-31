@@ -1,8 +1,10 @@
+import { useState, useMemo } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import MAvatar from "../../assets/Male_avatar.jpg";
 import FeAvatar from "../../assets/Female_avatar.jpg";
 import { useData } from "../../DashboardComponents/DataContext";
+import { toast } from "react-toastify";
 
 import {
   Card,
@@ -11,30 +13,12 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
+import { RiDeleteBack2Fill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const TABLE_HEAD = [
   "CustomerID",
@@ -43,60 +27,74 @@ const TABLE_HEAD = [
   "Gender",
   "Phone Number",
   "Driver LicenseNumber",
-  "",
-];
-
-const TABLE_ROWS = [
-  {
-    img: `${FeAvatar}`,
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
+  "Edit",
+  "Delete",
 ];
 
 const Customers = () => {
-  const { customersData } = useData();
-  console.log(customersData);
+  const { customersData, fetchCustomers } = useData();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredCustomers = useMemo(() => {
+    if (!searchTerm.trim()) return customersData;
+
+    const term = searchTerm.toLowerCase();
+
+    return customersData.filter((customer) => {
+      return (
+        (customer.PhoneNumber != null &&
+          String(customer.PhoneNumber).toLowerCase().includes(term)) ||
+        (customer.DriverLicenseNumber != null &&
+          String(customer.DriverLicenseNumber).toLowerCase().includes(term))
+      );
+    });
+  }, [customersData, searchTerm]);
+
+  const handleDelete = async (id) => {
+    const userConfirmed = window.confirm(
+      "Are you sure you want to delete this customer?"
+    );
+    if (!userConfirmed) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost/SmartKey/Backend/api/customers/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            // "Authorization": `Bearer ${token}` // Uncomment if needed
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Check if response has content before parsing JSON
+      const contentLength = response.headers.get("content-length");
+      let result = null;
+
+      if (contentLength && parseInt(contentLength) > 0) {
+        result = await response.json();
+      }
+
+      toast.success("Customer deleted successfully");
+      fetchCustomers(); // Refresh customer list
+
+      return result;
+    } catch (error) {
+      console.error("Delete error:", error);
+      toast.error(error.message || "Failed to delete customer");
+      throw error;
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+  };
+
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -110,27 +108,24 @@ const Customers = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm">
+            <Button variant="outlined" size="sm" onClick={clearSearch}>
               view all
             </Button>
-            <Button className="flex items-center gap-3" size="sm">
-              <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add customer
-            </Button>
+            <Link to={`/Dashboard/Customers/addnew`}>
+              <Button className="flex items-center gap-3" size="sm">
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add
+                customer
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
           <div className="w-full md:w-72">
             <Input
               label="Search"
+              name="filter"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
             />
           </div>
@@ -157,11 +152,11 @@ const Customers = () => {
             </tr>
           </thead>
           <tbody>
-            {customersData.map((row, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
+            {filteredCustomers.map((row, index) => {
+              const isLast = index === row.length - 1;
               const classes = isLast
                 ? "p-4"
-                : "p-4 border-b border-blue-gray-50";
+                : "p-4 border-b border-blue-gray-50 text-start";
 
               const fullName = `${row.FirstName} ${row.SecondName} ${row.LastName}`;
               const genderLabel = row.Gender ? "Female" : "Male";
@@ -196,17 +191,18 @@ const Customers = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
+                    <img
+                      src={row.Gender ? FeAvatar : MAvatar}
+                      alt={row.FirstName}
+                      size="sm"
+                      className="h-10"
+                    />
+
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal flex justify-start items-center"
+                      className="font-normal "
                     >
-                      <img
-                        src={row.Gender ? FeAvatar : MAvatar}
-                        alt={row.FirstName}
-                        size="sm"
-                        className="h-16"
-                      />
                       {genderLabel}
                     </Typography>
                   </td>
@@ -216,7 +212,7 @@ const Customers = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {row.PhoneNumber}
+                      {row.PhoneNumber.trim()}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -229,9 +225,21 @@ const Customers = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Tooltip content="Edit Customer">
-                      <IconButton variant="text">
-                        <PencilIcon className="h-4 w-4" />
+                    <Link to={`/Dashboard/Customers/Update/${row.CustomerID}`}>
+                      <Tooltip content="Edit Customer">
+                        <IconButton variant="text">
+                          <PencilIcon className="h-6 w-6 text-light-blue-800" />
+                        </IconButton>
+                      </Tooltip>
+                    </Link>
+                  </td>
+                  <td className={classes}>
+                    <Tooltip content="Delete">
+                      <IconButton
+                        variant="text"
+                        onClick={() => handleDelete(row.CustomerID)}
+                      >
+                        <RiDeleteBack2Fill className="h-6 w-6 text-red-700" />
                       </IconButton>
                     </Tooltip>
                   </td>

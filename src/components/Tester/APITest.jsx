@@ -8,14 +8,14 @@ const APItest = () => {
     Password: "",
   });
 
-  // make post request to the API
+  // here we make post to the  API
   const postData = async () => {
     try {
       const response = await fetch(
         "http://localhost/SmartKey/Backend/api/users/",
         {
           method: "POST",
-          // credentials: "same-origin",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
           },

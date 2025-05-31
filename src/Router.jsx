@@ -50,7 +50,7 @@ const Router = () => {
             element={<CustomerDetail />}
           />
           <Route
-            path="/Dashboard/Customers/Update"
+            path="/Dashboard/Customers/Update/:id"
             element={<UpdateCustomer />}
           />
 
@@ -65,14 +65,17 @@ const Router = () => {
             element={<VehicleDetail />}
           />
           <Route
-            path="/Dashboard/vehicles/Update"
+            path="/Dashboard/vehicles/Update/:id"
             element={<UpdateVehicle />}
           />
 
           {/* Booking Car */}
           <Route path="/Dashboard/Booking" element={<BookingCarList />} />
           <Route path="/Dashboard/Booking/addnew" element={<AddNewBooking />} />
-          <Route path="/Dashboard/Booking/Update" element={<UpdateBooking />} />
+          <Route
+            path="/Dashboard/Booking/Update/:id"
+            element={<UpdateBooking />}
+          />
 
           {/* Transactions */}
           <Route path="/Dashboard/Transactions" element={<TransactionList />} />
@@ -81,7 +84,10 @@ const Router = () => {
           {/* Users */}
           <Route path="/Dashboard/Users" element={<Users />} />
           <Route path="/Dashboard/Users/addnew" element={<AddnewUser />} />
-          <Route path="/Dashboard/Users/UpdateUser" element={<UpdateUser />} />
+          <Route
+            path="/Dashboard/Users/UpdateUser/:id"
+            element={<UpdateUser />}
+          />
         </Route>
       </Routes>
     </Bro>

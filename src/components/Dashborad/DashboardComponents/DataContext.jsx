@@ -1,4 +1,3 @@
-// DataContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 // 1. Create the context
@@ -10,38 +9,28 @@ export const DataProvider = ({ children }) => {
   const [usersData, setUsersData] = useState([]);
   const [paymentData, setPaymentData] = useState([]);
 
-  const [customersData, setCustomersData] = useState([
-    {
-      CustomerID: 1,
-      FirstName: "ليلى",
-      SecondName: "محمد",
-      LastName: "الحلبي",
-      DateOfBirth: "1985-03-15 00:00:00",
-      Gender: true,
-      PhoneNumber: "+963 955 019 81",
-      DriverLicenseNumber: "DAM-AHMED-8503-215",
-    },
-    {
-      CustomerID: 2,
-      FirstName: "محمد",
-      SecondName: "علي",
-      LastName: "الدمشقي",
-      DateOfBirth: "1990-07-22 00:00:00",
-      Gender: false,
-      PhoneNumber: "+963 933 016 73",
-      DriverLicenseNumber: "DAM-MOHAM-9007-471",
-    },
-    {
-      CustomerID: 9,
-      FirstName: "هدى",
-      SecondName: "ناديا",
-      LastName: "الادلبية",
-      DateOfBirth: "1989-02-14 00:00:00",
-      Gender: true,
-      PhoneNumber: "+963 988 015 63",
-      DriverLicenseNumber: "IDL-HUDA-8902-284",
-    },
-  ]);
+  const [customersData, setCustomersData] = useState([]);
+
+  // Fetching Customers data form API
+  const fetchCustomers = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/SmartKey/Backend/api/customers/"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setCustomersData(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
 
   return (
     <DataContext.Provider
@@ -54,6 +43,7 @@ export const DataProvider = ({ children }) => {
         setUsersData,
         paymentData,
         setPaymentData,
+        fetchCustomers,
       }}
     >
       {children}
