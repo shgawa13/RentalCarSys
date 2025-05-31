@@ -8,7 +8,7 @@ export const DataProvider = ({ children }) => {
   const [vehiclesData, setVehiclesData] = useState([]);
   const [usersData, setUsersData] = useState([]);
   const [paymentData, setPaymentData] = useState([]);
-
+  const [bookingsData, setBookingsData] = useState([]);
   const [customersData, setCustomersData] = useState([]);
 
   // Fetching Customers data form API
@@ -45,9 +45,26 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const fetchBookingData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/SmartKey/Backend/api/rentalbooking/"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setBookingsData(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
     fetchCustomers();
     fetchVehicles();
+    fetchBookingData();
   }, []);
 
   return (
@@ -63,6 +80,8 @@ export const DataProvider = ({ children }) => {
         setPaymentData,
         fetchCustomers,
         fetchVehicles,
+        bookingsData,
+        fetchBookingData,
       }}
     >
       {children}

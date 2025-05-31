@@ -58,39 +58,50 @@ const AddNewVehicle = () => {
     }));
   };
 
-  const handleSubmit = async () => {
-    // Convert and validate fields
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       const response = await fetch(
         "http://localhost/SmartKey/Backend/api/vehicles/",
         {
-          header: "Content-Type: application/json",
           method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json", // ✅ Correct key: headers
+          },
           body: JSON.stringify({
             Make: form.Make,
             Model: form.Model,
-            Year: form.Year,
-            Mileage: parseInt(form.Mileage),
-            FuelTypeID: parseInt(form.FuelTypeID),
+            Year: Number(form.Year),
+            Mileage: Number(form.Mileage),
+            FuelTypeID: Number(form.FuelTypeID),
             PlateNumber: form.PlateNumber,
-            CarCategoryID: parseInt(form.CarCategoryID),
+            CarCategoryID: Number(form.CarCategoryID),
             RentalPricePerDay: parseFloat(form.RentalPricePerDay),
             IsAvailableForRent: true,
-            CarImage: "",
+            CarImage: null, // matches what your backend expects
           }),
         }
       );
 
-      const result = await response.json();
-      console.log(form.JSON());
-      if (!response.ok) {
-        console.error("Response error:", result);
-        toast.error(result?.message || "Failed to add vehicle");
-        return;
-      }
+      const text = await response.text(); // Use text() in case it's not valid JSON
 
-      toast.success("Vehicle added successfully!");
-      fetchVehicles();
+      try {
+        const result = JSON.parse(text); // Try parsing JSON
+        console.log("Server response:", result);
+
+        if (!response.ok) {
+          toast.error(result?.message || "Failed to add vehicle");
+          return;
+        }
+
+        toast.success("Vehicle added successfully!");
+        fetchVehicles();
+      } catch (parseError) {
+        console.error("Invalid JSON returned:", text);
+        toast.error("Server returned invalid response");
+      }
     } catch (error) {
       console.error("Post error:", error);
       toast.error("Unexpected error");
@@ -111,7 +122,7 @@ const AddNewVehicle = () => {
         </Link>
       </div>
 
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -278,7 +289,6 @@ const AddNewVehicle = () => {
 
         <button
           type="submit"
-          onClick={handleSubmit}
           className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition mt-6"
         >
           Add New Vehicle

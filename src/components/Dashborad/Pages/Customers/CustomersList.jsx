@@ -31,7 +31,7 @@ const TABLE_HEAD = [
   "Delete",
 ];
 
-const Customers = () => {
+const CustomersList = () => {
   const { customersData, fetchCustomers } = useData();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -266,4 +266,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default CustomersList;
