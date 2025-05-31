@@ -28,8 +28,26 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  // Fetching Vehicles data form API
+  const fetchVehicles = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/SmartKey/Backend/api/vehicles/"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setVehiclesData(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
     fetchCustomers();
+    fetchVehicles();
   }, []);
 
   return (
@@ -44,6 +62,7 @@ export const DataProvider = ({ children }) => {
         paymentData,
         setPaymentData,
         fetchCustomers,
+        fetchVehicles,
       }}
     >
       {children}

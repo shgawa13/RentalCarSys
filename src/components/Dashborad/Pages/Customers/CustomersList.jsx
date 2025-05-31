@@ -122,7 +122,7 @@ const Customers = () => {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="w-full md:w-72">
             <Input
-              label="Search"
+              label="Search by LicenseNumber or Phone"
               name="filter"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
