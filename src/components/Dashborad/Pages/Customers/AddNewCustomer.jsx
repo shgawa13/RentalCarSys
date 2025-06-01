@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useData } from "../../DashboardComponents/DataContext";
 import { alert } from "@material-tailwind/react";
 import { toast } from "react-toastify";
-
+import { IoArrowBackSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 const AddNewCustomer = () => {
   // I need it to refrech the list after i create new customer
   const { fetchCustomers } = useData();
@@ -66,9 +67,17 @@ const AddNewCustomer = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-8 bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-        Add a New Customer
-      </h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Add New Customer
+        </h2>
+        <Link
+          to="/Dashboard/Customers"
+          className="flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <IoArrowBackSharp className="mr-1" /> Back to customers
+        </Link>
+      </div>
       <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -155,7 +164,7 @@ const AddNewCustomer = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Driver License Number
+            Driver License Number ex: DMA-ABCD-1234
           </label>
           <input
             name="DriverLicenseNumber"

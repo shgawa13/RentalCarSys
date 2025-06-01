@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import MAvatar from "../../assets/Male_avatar.jpg";
@@ -31,6 +31,7 @@ const TABLE_HEAD = [
 ];
 
 const CustomersList = () => {
+  const [loading, setLoading] = useState(true);
   const { customersData, fetchCustomers } = useData();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -60,6 +61,7 @@ const CustomersList = () => {
         `http://localhost/SmartKey/Backend/api/customers/${id}`,
         {
           method: "DELETE",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
           },
@@ -88,10 +90,7 @@ const CustomersList = () => {
     }
   };
 
-  const clearSearch = () => {
-    setSearchTerm("");
-  };
-
+  const clearSearch = () => setSearchTerm("");
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">

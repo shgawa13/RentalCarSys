@@ -183,7 +183,7 @@ const AddNewVehicle = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Price Per Day ($)
+              Price Per Day $
             </label>
             <input
               name="RentalPricePerDay"

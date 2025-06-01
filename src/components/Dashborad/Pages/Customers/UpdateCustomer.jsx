@@ -67,9 +67,17 @@ const UpdateCustomer = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-8 bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-        Edit Customer ID: {id}
-      </h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Edit Customer ID: {id}
+        </h2>
+        <Link
+          to="/Dashboard/Customers"
+          className="flex items-center text-blue-600 hover:text-blue-800"
+        >
+          <IoArrowBackSharp className="mr-1" /> Back to customers
+        </Link>
+      </div>
       <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
         <div>
           <label className="block text-sm font-medium text-gray-700">
@@ -170,13 +178,7 @@ const UpdateCustomer = () => {
           Update
         </button>
       </form>
-      <div className="max-w-4xl mx-auto mt-8 bg-white shadow-md rounded-lg p-6">
-        {/* Go Back Button */}
-        <Link to={"/Dashboard/Customers/"}>
-          <IoArrowBackSharp />
-          Go Back
-        </Link>
-      </div>
+      <div className="max-w-4xl mx-auto mt-8 bg-white shadow-md rounded-lg p-6"></div>
     </div>
   );
 };
