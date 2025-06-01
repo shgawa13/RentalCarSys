@@ -21,12 +21,11 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const TABLE_HEAD = [
-  "CustomerID",
+  "Customer ID",
   "Full Name",
-  "Date Of Birth",
-  "Gender",
   "Phone Number",
-  "Driver LicenseNumber",
+  "Date of Birth",
+  "Driver License Number",
   "Edit",
   "Delete",
 ];
@@ -63,7 +62,6 @@ const CustomersList = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            // "Authorization": `Bearer ${token}` // Uncomment if needed
           },
         }
       );
@@ -72,7 +70,6 @@ const CustomersList = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Check if response has content before parsing JSON
       const contentLength = response.headers.get("content-length");
       let result = null;
 
@@ -153,10 +150,10 @@ const CustomersList = () => {
           </thead>
           <tbody>
             {filteredCustomers.map((row, index) => {
-              const isLast = index === row.length - 1;
+              const isLast = index === filteredCustomers.length - 1;
               const classes = isLast
                 ? "p-4"
-                : "p-4 border-b border-blue-gray-50 text-start";
+                : "p-4 border-b border-blue-gray-50";
 
               const fullName = `${row.FirstName} ${row.SecondName} ${row.LastName}`;
               const genderLabel = row.Gender ? "Female" : "Male";
@@ -173,48 +170,44 @@ const CustomersList = () => {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {fullName}
-                    </Typography>
+                    <div className="flex items-center">
+                      <img
+                        className="w-14 h-14 rounded-full"
+                        src={row.Gender ? FeAvatar : MAvatar}
+                        alt={`${fullName}'s avatar`}
+                      />
+                      <div className="ps-3">
+                        <Typography className="text-base font-semibold">
+                          {fullName}
+                        </Typography>
+                        <Typography className="font-normal text-gray-500">
+                          {genderLabel}
+                        </Typography>
+                      </div>
+                    </div>
                   </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {row.DateOfBirth}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <img
-                      src={row.Gender ? FeAvatar : MAvatar}
-                      alt={row.FirstName}
-                      size="sm"
-                      className="h-10"
-                    />
 
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal "
-                    >
-                      {genderLabel}
-                    </Typography>
-                  </td>
+                  {/* Phone Number */}
                   <td className={classes}>
                     <Typography
                       variant="small"
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {row.PhoneNumber.trim()}
+                      {row.PhoneNumber}
                     </Typography>
                   </td>
+
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {row.DateOfBirth.split(" ")[0]}
+                    </Typography>
+                  </td>
+
                   <td className={classes}>
                     <Typography
                       variant="small"
@@ -224,6 +217,8 @@ const CustomersList = () => {
                       {row.DriverLicenseNumber}
                     </Typography>
                   </td>
+
+                  {/* Edit Action */}
                   <td className={classes}>
                     <Link to={`/Dashboard/Customers/Update/${row.CustomerID}`}>
                       <Tooltip content="Edit Customer">
@@ -233,6 +228,8 @@ const CustomersList = () => {
                       </Tooltip>
                     </Link>
                   </td>
+
+                  {/* Delete Action */}
                   <td className={classes}>
                     <Tooltip content="Delete">
                       <IconButton
@@ -252,6 +249,7 @@ const CustomersList = () => {
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
           Page 1 of 10
+          {Card.length > 0 ? ` (${Card.length} total)` : ""}
         </Typography>
         <div className="flex gap-2">
           <Button variant="outlined" size="sm">
