@@ -87,7 +87,7 @@ export const DataProvider = ({ children }) => {
         throw new Error("Network response was not ok");
       }
       const result = await response.json();
-      setUsersData(result);
+      setTransactionData(result);
     } catch (error) {
       console.error("Fetch error:", error);
     } finally {
