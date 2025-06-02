@@ -34,7 +34,6 @@ const CustomersList = () => {
   const [loading, setLoading] = useState(true);
   const { customersData, fetchCustomers } = useData();
   const [searchTerm, setSearchTerm] = useState("");
-
   const filteredCustomers = useMemo(() => {
     if (!searchTerm.trim()) return customersData;
 

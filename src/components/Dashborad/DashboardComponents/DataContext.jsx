@@ -7,7 +7,7 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [vehiclesData, setVehiclesData] = useState([]);
   const [usersData, setUsersData] = useState([]);
-  const [paymentData, setPaymentData] = useState([]);
+  const [TransactionData, setTransactionData] = useState([]);
   const [bookingsData, setBookingsData] = useState([]);
   const [customersData, setCustomersData] = useState([]);
 
@@ -61,10 +61,45 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  // Fetching Users data form API
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/SmartKey/Backend/api/users/"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setUsersData(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+    }
+  };
+
+  const fetchTransactionData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost/SmartKey/Backend/api/rentaltransaction/"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setUsersData(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
     fetchCustomers();
     fetchVehicles();
     fetchBookingData();
+    fetchUsers();
+    fetchTransactionData();
   }, []);
 
   return (
@@ -75,9 +110,9 @@ export const DataProvider = ({ children }) => {
         vehiclesData,
         setVehiclesData,
         usersData,
-        setUsersData,
-        paymentData,
-        setPaymentData,
+        fetchUsers,
+        TransactionData,
+        fetchTransactionData,
         fetchCustomers,
         fetchVehicles,
         bookingsData,

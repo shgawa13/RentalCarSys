@@ -17,25 +17,7 @@ import {
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-// Updated table headers for vehicles
-const TABLE_HEAD = [
-  "Vehicle ID",
-  "Make",
-  "Model",
-  "Year",
-  "Mileage",
-  "Fuel Type",
-  "Plate Number",
-  "Category",
-  "Price/Day",
-  "Availability",
-  "Image",
-  "Edit",
-  "Delete",
-];
-
 const VehicleList = () => {
-  // Changed to vehiclesData and fetchVehicles
   const { vehiclesData, fetchVehicles } = useData();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -134,164 +116,71 @@ const VehicleList = () => {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+      <CardBody className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+        {filteredVehicles.map((vehicle) => (
+          <div
+            key={vehicle.VehicleID}
+            className="bg-white rounded-xl shadow-md p-4 flex flex-col gap-2"
+          >
+            <div className="flex items-center gap-4">
+              {vehicle.CarImage ? (
+                <img
+                  src={vehicle.CarImage}
+                  alt={`${vehicle.Make} ${vehicle.Model}`}
+                  className="h-16 w-16 rounded-full object-cover"
+                />
+              ) : (
+                <div className="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">
+                  <Typography variant="small">No Image</Typography>
+                </div>
+              )}
+              <div>
+                <Typography variant="h6" className="font-semibold">
+                  {vehicle.Make} {vehicle.Model}
+                </Typography>
+                <Typography variant="small" color="gray">
+                  {vehicle.Year} • {vehicle.CategoryName}
+                </Typography>
+              </div>
+            </div>
+            <div className="text-sm text-gray-600">
+              <p>Vehicle ID: {vehicle.VehicleID}</p>
+              <p>Plate: {vehicle.PlateNumber}</p>
+              <p>Mileage: {vehicle.Mileage}</p>
+              <p>Fuel: {vehicle.FuelType}</p>
+              <p>Price/Day: ${vehicle.PricePerDay}</p>
+              <p>
+                Status:{" "}
+                <span
+                  className={`font-semibold ${
+                    vehicle.IsAvailableForRent
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
                 >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredVehicles.map((vehicle, index) => {
-              const isLast = index === filteredVehicles.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b border-blue-gray-50 text-start";
-
-              return (
-                <tr key={vehicle.VehicleID}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.VehicleID}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.Make}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.Model}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.Year}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.Mileage}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.FuelType}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.PlateNumber}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {vehicle.CategoryName}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      ${vehicle.PricePerDay}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color={vehicle.IsAvailableForRent ? "green" : "red"}
-                      className="font-normal"
-                    >
-                      {vehicle.IsAvailableForRent ? "Available" : "Rented"}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    {vehicle.CarImage ? (
-                      <img
-                        src={vehicle.CarImage}
-                        alt={`${vehicle.Make} ${vehicle.Model}`}
-                        className="h-10 w-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                        <Typography variant="small">No Image</Typography>
-                      </div>
-                    )}
-                  </td>
-                  <td className={classes}>
-                    <Link
-                      to={`/Dashboard/Vehicles/Update/${vehicle.VehicleID}`}
-                    >
-                      <Tooltip content="Edit Vehicle">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-6 w-6 text-light-blue-800" />
-                        </IconButton>
-                      </Tooltip>
-                    </Link>
-                  </td>
-                  <td className={classes}>
-                    <Tooltip content="Delete">
-                      <IconButton
-                        variant="text"
-                        onClick={() => handleDelete(vehicle.VehicleID)}
-                      >
-                        <RiDeleteBack2Fill className="h-6 w-6 text-red-700" />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                  {vehicle.IsAvailableForRent ? "Available" : "Rented"}
+                </span>
+              </p>
+            </div>
+            <div className="flex justify-end gap-2 mt-2">
+              <Link to={`/Dashboard/Vehicles/Update/${vehicle.VehicleID}`}>
+                <Tooltip content="Edit Vehicle">
+                  <IconButton variant="text">
+                    <PencilIcon className="h-5 w-5 text-blue-700" />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+              <Tooltip content="Delete">
+                <IconButton
+                  variant="text"
+                  onClick={() => handleDelete(vehicle.VehicleID)}
+                >
+                  <RiDeleteBack2Fill className="h-5 w-5 text-red-700" />
+                </IconButton>
+              </Tooltip>
+            </div>
+          </div>
+        ))}
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">

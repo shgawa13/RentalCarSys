@@ -22,7 +22,7 @@ import AddNewBooking from "./components/Dashborad/Pages/Booking/AddNewBooking";
 import UpdateBooking from "./components/Dashborad/Pages/Booking/UpdateBooking";
 import TransactionList from "./components/Dashborad/Pages/RentalTransaction/TransactionList";
 import Payment from "./components/Dashborad/Pages/RentalTransaction/Payment";
-import Users from "./components/Dashborad/Pages/Users/UsersList";
+import UsersList from "./components/Dashborad/Pages/Users/UsersList";
 import AddnewUser from "./components/Dashborad/Pages/Users/AddNewUser";
 import UpdateUser from "./components/Dashborad/Pages/Users/UpdateUser";
 
@@ -82,12 +82,9 @@ const Router = () => {
           <Route path="/Dashboard/Payment" element={<Payment />} />
 
           {/* Users */}
-          <Route path="/Dashboard/Users" element={<Users />} />
+          <Route path="/Dashboard/Users" element={<UsersList />} />
           <Route path="/Dashboard/Users/addnew" element={<AddnewUser />} />
-          <Route
-            path="/Dashboard/Users/UpdateUser/:id"
-            element={<UpdateUser />}
-          />
+          <Route path="/Dashboard/Users/Update/:id" element={<UpdateUser />} />
         </Route>
       </Routes>
     </Bro>
