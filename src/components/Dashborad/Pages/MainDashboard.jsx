@@ -6,6 +6,7 @@ const MainDashboard = () => {
   return (
     <>
       <SheardLayout>
+        <h1>DashBoard</h1>
         <Outlet />
       </SheardLayout>
     </>

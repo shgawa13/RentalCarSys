@@ -1,85 +1,55 @@
-// import React from "react";
-// import "./LoginRegistter.css";
-// import { FaUser, FaLock, FaHome } from "react-icons/fa";
-// import { Link } from "react-router-dom";
-
-// const Login = () => {
-//   return (
-//     <div className={`body-login wrapper`}>
-
-//       <div className="form-box login">
-//         <form action="" className="formLogin">
-//           <Link to={"/"}>
-//         {" "}
-//         <FaHome className="ReturnToHome" />
-//       </Link>
-//           <h1>Login </h1>
-//           <div className="input-box">
-//             <input type="text" placeholder="Username " required />
-//             <FaUser className="icon" />
-//           </div>
-//           <div className="input-box">
-//             <input type="password" placeholder="password " required />
-//             <FaLock className="icon" />
-//           </div>
-//           <div className="remeber-forgot">
-//             <label>
-//               {" "}
-//               <input type="checkbox" />
-//               Remember me
-//             </label>
-//             <a href="#">Forgot password?</a>
-//           </div>
-//           <button type="submit">Login</button>
-//           <div className="register-link">
-//             <p>
-//               Don't have an account ?<Link to={"/register"}>Rrgister</Link>
-//             </p>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./LoginRegistter.css";
 import { FaUser, FaLock, FaHome } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(
-        "http://YOUR_SERVER_DOMAIN/backend/login.php",
+        "http://localhost/SmartKey/Backend/api/login/",
         {
           method: "POST",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({
+            Email: form.email.trim(),
+            Password: form.password.trim(),
+          }),
         }
       );
 
       const data = await response.json();
-
+      console.log("Server Response:", data);
       if (response.ok) {
-        alert("Login successful");
-        // يمكنك هنا تحويل المستخدم لصفحة أخرى مثلاً:
-        // navigate("/dashboard");
+        toast.success("Login successful!");
+        navigate("/Dashboard"); // Redirect after successful login
       } else {
-        alert(data.message);
+        toast.error(data.message || "Login failed");
       }
     } catch (error) {
-      alert("Error connecting to server");
-      console.error(error);
+      console.error("Error connecting to server", error);
+      toast.error("Error connecting to server");
     }
   };
 
@@ -87,7 +57,7 @@ const Login = () => {
     <div className="body-login wrapper">
       <div className="form-box login">
         <form className="formLogin" onSubmit={handleLogin}>
-          <Link to={"/"}>
+          <Link to="/">
             <FaHome className="ReturnToHome" />
           </Link>
           <h1>Login</h1>
@@ -96,8 +66,9 @@ const Login = () => {
               type="email"
               placeholder="Email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={form.email}
+              onChange={handleChange}
+              name="email"
             />
             <FaUser className="icon" />
           </div>
@@ -106,8 +77,9 @@ const Login = () => {
               type="password"
               placeholder="Password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={form.password}
+              onChange={handleChange}
+              name="password"
             />
             <FaLock className="icon" />
           </div>
@@ -121,10 +93,9 @@ const Login = () => {
           <button type="submit">Login</button>
           <div className="register-link">
             <p>
-              Do not have an account? <Link to={"/register"}>Register</Link>
+              Do not have an account? <Link to="/register">Register</Link>
             </p>
           </div>
-          <Link to={"/Dashboard"}> Dash</Link>
         </form>
       </div>
     </div>
