@@ -41,7 +41,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost/SmartKey/Backend/api/users/",
+        "http://nanodevkey.mooo.com/SmartKey/Backend/api/users/",
         {
           method: "POST",
           credentials: "same-origin", // Use include if the API is on a different port/domain

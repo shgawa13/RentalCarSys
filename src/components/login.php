@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // أو حدد نطاق React: http://localhost:3000
+header("Access-Control-Allow-Origin: *"); // أو حدد نطاق React: http://nanodevkey.mooo.com:3000
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
