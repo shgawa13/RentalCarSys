@@ -40,7 +40,7 @@ const UpdateCustomer = () => {
   const handleSubmit = async (e) => {
     try {
       const response = await fetch(
-        `http://nanodevkey.mooo.com/SmartKey/Backend/api/customers/${form.CustomerID}`,
+        `https://shgawa.space/SmartKey/Backend/api/customers/${form.CustomerID}`,
         {
           method: "PUT",
           credentials: "same-origin",

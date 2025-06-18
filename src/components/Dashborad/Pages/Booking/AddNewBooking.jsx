@@ -183,7 +183,7 @@ const AddNewBooking = () => {
       };
 
       const response = await fetch(
-        `http://nanodevkey.mooo.com/SmartKey/Backend/api/rentalbooking/`,
+        `https://shgawa.space/SmartKey/Backend/api/rentalbooking/`,
         {
           method: "POST",
           headers: {
